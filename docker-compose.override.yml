@@ -1,0 +1,44 @@
+version: '3.4'
+
+services:
+  tv-products-api:
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_URLS: "http://+:80"
+      PRODUCTS_API_ConnectionStrings__RabbitMq: "host=tv-rabbitmq;username=rabbitmq;password=rabbitmq"
+      PRODUCTS_API_Docker__BasePath: "/gateway/products/"
+    ports:
+      - "80"
+    volumes:
+      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
+
+  tv-users-api:
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_URLS: "http://+:80"
+      USERS_API_ConnectionStrings__RabbitMq: "host=tv-rabbitmq;username=rabbitmq;password=rabbitmq"
+      USERS_API_Docker__BasePath: "/gateway/users/"
+    ports:
+      - "80"
+    volumes:
+      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
+
+  tv-gateway-api:
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_URLS: "http://+:80"
+      GATEWAY_API_Docker__BasePath: "gateway"
+    ports:
+      - "5000:80"
+    volumes:
+      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
+
+  tv-rabbitmq:
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"

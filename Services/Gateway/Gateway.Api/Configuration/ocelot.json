@@ -1,0 +1,31 @@
+﻿{
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/gateway/users/{rest}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Options", "Delete" ],
+
+      "DownstreamPathTemplate": "/{rest}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tv-users-api",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/products/{rest}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Options", "Delete" ],
+
+      "DownstreamPathTemplate": "/{rest}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tv-products-api",
+          "Port": 80
+        }
+      ]
+    }
+  ],
+  "GlobalConfiguration": {}
+}

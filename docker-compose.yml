@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  tv-products-api:
+    image: ${DOCKER_REGISTRY-}productsapi
+    build:
+      context: .
+      dockerfile: Services/Products/Products.Api/Dockerfile
+    depends_on:
+      - tv-rabbitmq
+
+  tv-users-api:
+    image: ${DOCKER_REGISTRY-}usersapi
+    build:
+      context: .
+      dockerfile: Services/Users/Users.Api/Dockerfile
+    depends_on:
+      - tv-rabbitmq
+
+  tv-gateway-api:
+    image: ${DOCKER_REGISTRY-}gatewayapi
+    build:
+      context: .
+      dockerfile: Services/Gateway/Gateway.Api/Dockerfile
+    depends_on:
+      - tv-users-api
+      - tv-products-api
+
+  tv-rabbitmq:
+    image: "rabbitmq:3-management"
